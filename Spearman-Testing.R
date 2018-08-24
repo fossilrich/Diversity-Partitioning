@@ -1,25 +1,12 @@
 #clean routine
 rm (list=ls())
-setwd("//naturkundemuseum-berlin.de/MuseumDFSRoot/Benutzer/richard.hofmann/Desktop/PNAS_RESUB")
+#setwd("//...")
 ####Package Installer####
-#delete "#" if needed#
-#install.packages("ggplot2")
-#install.packages("ggthemes")
-#install.packages("plyr")
-#install.packages("gridExtra")
-#install.packages("betapart")
-#install.packages("latticeExtra")
-#install.packages("sjstats")
 
 ####load installed libraries####
 library(ggplot2)
 library(ggthemes)
-library(plyr)
-library(gridExtra)
-library(latticeExtra)
-library(fitdistrplus)
-library(sjstats)
-library(reshape2)
+
 
 theme_set(theme_classic()+  theme(panel.background = element_rect(fill = "white", colour = "black"), 
                                   strip.background = element_rect(colour ="black", fill="grey90"), 
@@ -28,7 +15,7 @@ theme_set(theme_classic()+  theme(panel.background = element_rect(fill = "white"
                                   panel.grid.major = element_blank()))
 
 ####load the Data####
-Data <-  read.csv("//naturkundemuseum-berlin.de/MuseumDFSRoot/Benutzer/richard.hofmann/Desktop/PNAS_RESUB/newdiversities.csv", 
+Data <-  read.csv("//....diversities.csv", 
                   row.names = NULL, sep=";")
 
 #add factor Period which is important for later grouping
@@ -67,7 +54,6 @@ Ref.pval <- c(Ref.pval, tmp$p.value)
 
 Ref.infl <- cbind(Ref.Rho, Ref.pval)
 rownames(Ref.infl) <- c("Gamma", "Alpha", "BetaW", "BetaSim")
-
 
 
 ####Maximum Great Circle Distance####
@@ -214,20 +200,10 @@ Htaxa.pval <- c(Htaxa.pval, tmp$p.value)
 Htaxa.infl <- cbind(Htaxa.Rho, Htaxa.pval)
 rownames(Htaxa.infl) <- c("Gamma", "Alpha", "BetaW", "BetaSim")
 
-
-
-####putting shit together####
+####putting everything together####
 all.rho <- cbind(Coll.infl, Ref.infl, Dur.infl, Env.infl, Htaxa.infl, MaxGCD.infl, MedGCD.infl, madGCD.infl) 
 write.csv(all.rho, file = "Rhos")
 
 
-
-DataRef10 <- subset(Data, RefForm < 10)
-
-Data2 <- subset(Data, madGCD < 450)
-ggplot(Data2, aes(y=BetaSimForm , x=maxGCD))+
-  geom_point()+
-  geom_smooth(method='lm')
-+
  
   facet_grid(Period.new ~ .)
